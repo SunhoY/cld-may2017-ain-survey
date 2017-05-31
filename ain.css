@@ -1,0 +1,7 @@
+body {
+    margin: 20px;
+}
+
+#gallery img {
+    max-width: 300px;
+}

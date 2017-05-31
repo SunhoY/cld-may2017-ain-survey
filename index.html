@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Welcome to AIN</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="ain.css">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.js"></script>
+        <script src="https://unpkg.com/vue"></script>
+        <script src="https://unpkg.com/vue-resource"></script>
+    </head>
+    <body>
+        <form class="ui form" id="usernameForm">
+            <div class="field" v-bind:class="{ disabled: started }">
+                <label>이름</label>
+                <input type="text" name="username" 
+                    placeholder="예를 들어, 해리" v-model="username">
+            </div>
+            <div class="field" v-bind:style="{ display: started ? 'none' : ''}">
+                <div class="ui checkbox">
+                <input type="checkbox" name="termAgreement" v-model="agreement">
+                <label>저희 서비스를 쓰시는 동안 개인정보 노출이 심히 염려되오니, 이에 대해서 입 싹 닫는 것을 동의합니다.</label>
+                </div>
+            </div>
+            <button class="ui button" type="button"
+                v-bind:class="{ disabled: !agreement || !username, loading: loading }"
+                v-bind:style="{ display: started ? 'none' : ''}"
+                v-on:click="start">네, 그럼요. 무덤까지 가져가겠습니다.</button>
+            <h1 v-bind:style="{ display: started ? '' : 'none'}">영혼의 동반자 {{ username }}님, 사진을 보고 호감도를 별점으로 매겨주세요.</h1>
+        </form>
+
+        <div class="ui doubling stackable container "id="gallery"
+            v-bind:style="{ display: enabled ? '' : 'none'}">
+            <div class="ui divider"></div>
+
+            <img id="currentImage" 
+                v-bind:src="files.length ? 'http://ain-images.s3-website-us-east-1.amazonaws.com/' + files[currentImageIndex] : ''"/>
+            <div class="ui container">
+                <button class="ui red button" v-on:click="evaluate(0)">그냥 그래요</button>
+                <button class="ui green button" v-on:click="evaluate(1)">좋아요</button>
+            </div>
+        </div>
+
+
+
+        <script src="ain.js"></script>
+    </body>
+</html>
